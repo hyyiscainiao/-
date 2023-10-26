@@ -69,14 +69,12 @@ const UserController = {
     }
   },
   getlist: async (req, res) => {
-    // console.log(req)
-
-    // const {currentPage,pageSize}=req.query
-    // console.log(currentPage,pageSize)
-    const result = await UserService.getlist();
-    // console.log(results)
+    const {currentPage,pageSize,search}=req.query
+    console.log(currentPage,pageSize)
+    const {total,result} = await UserService.getlist(currentPage,pageSize,search);
+    const count=total[0].total
     if (result.length !== 0) {
-      res.cc(1, "获取成功", result);
+      res.cc(1, "获取成功", {result,count});
     } else {
       res.cc(-1, "获取失败");
     }

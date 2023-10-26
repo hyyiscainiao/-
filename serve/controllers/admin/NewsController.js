@@ -84,6 +84,22 @@ const NewsController = {
     } else {
       res.cc(-1, "更新失败");
     }
+  },
+  uploadvideo:async (req,res)=>{
+    console.log(req.file)
+    if (req.file) {
+      res.send({
+        errno: 0, // 注意：值是数字，不能是字符串
+        data: {
+          url: "http://localhost:3000" + `/newsvideo/${req.file.filename}`, // 图片 src ，必须
+        },
+      });
+    } else {
+      res.send({
+        errno: 1, // 只要不等于 0 就行
+        message: "失败信息",
+      });
+    }
   }
 };
 

@@ -31,12 +31,14 @@ const UserService = {
 
     // console.log(r)
   },
-  getlist: async () => {
+  getlist: async (currentPage,pageSize,search) => {
     // console.log(currentPage,pageSize)
-    // const num = (currentPage - 1) *pageSize
-    const sql = `select * from users ORDER BY ID ASC`;
+    const num = (currentPage - 1) *pageSize
+    const sql = search?`select * from users order by id ASC`:`select * from users limit ${num},${pageSize} `;
+    const total=await queryOne('select count(*) as total  from users')
+    // console.log(total)
     const result = await queryOne(sql);
-    return result;
+    return {result,total};
   },
   delList: async (id) => {
     const sql = `DELETE FROM users WHERE id = '${id}'`;
